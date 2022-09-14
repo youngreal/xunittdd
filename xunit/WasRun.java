@@ -19,4 +19,12 @@ public class WasRun extends TestCase {
         log += " testMethod";
     }
 
+    public void testBrokenMethod() {
+        throw new AssertionError();
+    }
+
+    @Override
+    public void tearDown() {
+        log += " tearDown";
+    }
 }

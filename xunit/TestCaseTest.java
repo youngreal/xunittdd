@@ -6,20 +6,28 @@ public class TestCaseTest extends TestCase{
         super(name);
     }
 
-    /**
-     * 순서를 확인하기위해 개선하기위해 리팩토링하고싶다.
-     */
-
     public void testTemplateMethod() {
         WasRun wasRun = new WasRun("testMethod");
         wasRun.run();
-        Assert.assertEquals("setUp testMethod", wasRun.log);
+        Assert.assertEquals("setUp testMethod tearDown", wasRun.log);
     }
 
-//    public void testSetUp() {
-//        Assert.assertEquals(false, wasRun.wasSetup);
-//        wasRun.run();
-//        Assert.assertEquals("setUp testMethod",wasRun.log);
-//        Assert.assertEquals(true, wasRun.wasRun);
-//    }
+    public void testResult() {
+        WasRun wasRun = new WasRun("testMethod");
+        TestResult result = wasRun.run();
+        Assert.assertEquals("1 run, 0 failed", result.getSummary());
+    }
+
+    public void testFailedResultFormatting() {
+        TestResult result = new TestResult();
+        result.testStarted();
+        result.testFailed();
+        Assert.assertEquals("1 run, 1 failed", result.getSummary());
+    }
+
+    public void testFailedResult() {
+        WasRun wasRun = new WasRun("testBrokenMethod");
+        TestResult result = wasRun.run();
+        Assert.assertEquals("1 run, 1 failed", result.getSummary());
+    }
 }
